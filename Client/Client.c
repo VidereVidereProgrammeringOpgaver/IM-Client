@@ -65,7 +65,9 @@ int main (int argc, char* argv[])		// Three arguments to be checked later
 	serverAddr.sin_family = AF_INET;
 	inet_pton (AF_INET, servName, &serverAddr.sin_addr); // Server IP address
 	serverAddr.sin_port = htons (servPort);		// Server port number
-*/
+	 */
+
+
 	// Create socket
     if((s = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
