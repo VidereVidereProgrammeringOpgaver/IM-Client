@@ -1,6 +1,3 @@
-
-#include "Client.h"
-
 // Table 25.4			Echo  client program using TCP
 
 #include <stdio.h>
@@ -13,11 +10,14 @@
 #include <signal.h>
 #include <unistd.h>
 #include <string.h>
-//#include <arpa/innet.h> // inet -> innet !Error!
+//#include <arpa/innet.h> // inet -> innet !error!
 #include <arpa/inet.h>
 #include <sys/wait.h>
 
-int main (int argc, char* argv[])		// Three arguments to be checked later
+// gcc -o Table-25-4_new_v2 Table-25-4_new_v2.c
+
+
+int main (int argc, char* argv[  ])		// Three arguments to be checked later
 {
 	// Declare and define
 	int s;						// Socket descriptor
@@ -38,11 +38,11 @@ int main (int argc, char* argv[])		// Three arguments to be checked later
 		printf ("Error: three arguments are needed!");
 		exit (1);
 	}
-	//servName = arg[1]; // !Error!
+	//servName = arg[1]; // !blad!
 	servName = argv[1];
-	//servPort = atoi(arg [2]); // !Error!
+	//servPort = atoi(arg [2]); // !blad!
 	servPort = atoi(argv[2]);
-	//string = arg [3]; // !Error!
+	//string = arg [3]; // !blad!
 	string = argv[3];
 
 	struct sockaddr_in servAddr; // !ADD!
@@ -103,49 +103,67 @@ int main (int argc, char* argv[])		// Three arguments to be checked later
 	}
 	*/
 	printf("connect\n");
+	printf("---------\n");
 	int dataSend=0;
-	// Data transfer section
-	//send (s, string, strlen(string), 0);
-	dataSend = send (s, string, strlen(string), 0);
-	//dataSend = send (s, "123", 4, 0);
-	if(dataSend==-1)
-	{
-		printf("dataSend==-1 \n");
-		perror("send");
-	}
-	else
-	{
-		printf("else \n");
-	}
-	printf("while \n");
 
-	if(( n = recv( s, buffer, sizeof( buffer ), 0 ) ) <= 0 )
+	int t=18;
+	while(t>0)
 	{
-		perror("recv");
-	}
-	else
-	{
-		printf("Recv %d byte \n", n);
+		t--;
+
+		printf("\n\n-------------------------------\n");
+
+		// Data transfer section
+		//send (s, string, strlen(string), 0);
+		dataSend = send (s, string, strlen(string), 0);
+		//dataSend = send (s, "123", 4, 0);
+		if(dataSend==-1)
+		{
+			printf("dataSend==-1 \n");
+			perror("send");
+		}
+
+
+		if(( n = recv( s, buffer, sizeof( buffer ), 0 ) ) <= 0 )
+		{
+            if( n == 0 )
+            {
+              printf( "selectserver: socket %d hung up\n", s );
+              break;
+            }
+            else
+            {
+            	perror("recv");
+            }
+		}
+		else
+		{
+			printf("Recv %d byte \n", n);
+		}
+
+		/*
+		while ((n = recv (s, ptr, maxLen, 0)) > 0)
+		{
+			//ptr + = n;		// Move pointer along the buffer
+			ptr += n;		// Move pointer along the buffer
+			//maxLen - = n;	// Adjust the maximum number of bytes
+			maxLen -= n;	// Adjust the maximum number of bytes
+			len += n;		// Update the length of string received
+			printf("while1 \n");
+		} // End of while loop
+		*/
+
+		// Print and verify the echoed string
+		//buffer [len] = Â’\0Â’;
+		buffer [n] = '\0';
+		//printf ("Echoed string received: \n");
+		printf ("Echoed string received: %s \n", buffer);
+		//fputs (buffer, stdout);
+
+		printf ("\n");
+		sleep(10); // wait 10 seconds
 	}
 
-	/*
-	while ((n = recv (s, ptr, maxLen, 0)) > 0)
-	{
-		//ptr + = n;		// Move pointer along the buffer
-		ptr += n;		// Move pointer along the buffer
-		//maxLen - = n;	// Adjust the maximum number of bytes
-		maxLen -= n;	// Adjust the maximum number of bytes
-		len += n;		// Update the length of string received
-		printf("while1 \n");
-	} // End of while loop
-	*/
-
-	// Print and verify the echoed string
-	//buffer [len] = Â’\0Â’;
-	buffer [n] = '\0';
-	printf ("Echoed string received: \n");
-	fputs (buffer, stdout);
-	printf ("\n");
 
 	// Close socket
 	close (s);
