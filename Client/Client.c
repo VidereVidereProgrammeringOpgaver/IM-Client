@@ -44,6 +44,7 @@ int main (int argc, char* argv[  ])		// Three arguments to be checked later
 
 	struct sockaddr_in servAddr; // !ADD!
 
+
 	// Create socket
     if((s = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
