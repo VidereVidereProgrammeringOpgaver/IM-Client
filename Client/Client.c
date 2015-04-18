@@ -14,9 +14,6 @@
 #include <arpa/inet.h>
 #include <sys/wait.h>
 
-// gcc -o Table-25-4_new_v2 Table-25-4_new_v2.c
-
-
 int main (int argc, char* argv[  ])		// Three arguments to be checked later
 {
 	// Declare and define
@@ -47,25 +44,6 @@ int main (int argc, char* argv[  ])		// Three arguments to be checked later
 
 	struct sockaddr_in servAddr; // !ADD!
 
-
-	/*c
-	// Create socket
-	//if((s = socket (PF_INET, SOCK_STREAM, 0) < 0);
-	s = socket(AF_INET, SOCK_STREAM, 0);
-	if(s < 0)
-	{
-		perror ("Error: socket creation failed!");
-		exit (1);
-	}
-	bd/*
-
-	// Create remote (server) socket address
-	//memset (&servAddr, 0, sizeof(servAddr));
-	memset (&servAddr, '0', sizeof(servAddr));
-	serverAddr.sin_family = AF_INET;
-	inet_pton (AF_INET, servName, &serverAddr.sin_addr); // Server IP address
-	serverAddr.sin_port = htons (servPort);		// Server port number
-*/
 	// Create socket
     if((s = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
