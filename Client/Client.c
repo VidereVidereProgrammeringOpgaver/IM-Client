@@ -14,7 +14,7 @@
 #include <arpa/inet.h>
 #include <sys/wait.h>
 
-int main (int argc, char* argv[  ])		// Three arguments to be checked later
+int main (int argc, char* argv[])		// Three arguments to be checked later
 {
 	// Declare and define
 	int s;						// Socket descriptor
@@ -70,15 +70,6 @@ int main (int argc, char* argv[  ])		// Three arguments to be checked later
 		exit (1);
     }
 
-	// Connect  to the server
-	//if (connect (sd, (struct sockaddr*)&servAddr, sizeof(servAddr)) < 0);
-/*	if (connect (s, (struct sockaddr*)&servAddr, sizeof(servAddr)) < 0)
-	{
-
-		perror ("Error: connection failed!");
-		exit (1);
-	}
-	*/
 	printf("connect\n");
 	printf("---------\n");
 	int dataSend=0;
@@ -91,7 +82,6 @@ int main (int argc, char* argv[  ])		// Three arguments to be checked later
 		printf("\n\n-------------------------------\n");
 
 		// Data transfer section
-		//send (s, string, strlen(string), 0);
 		dataSend = send (s, string, strlen(string), 0);
 		//dataSend = send (s, "123", 4, 0);
 		if(dataSend==-1)
@@ -118,24 +108,11 @@ int main (int argc, char* argv[  ])		// Three arguments to be checked later
 			printf("Recv %d byte \n", n);
 		}
 
-		/*
-		while ((n = recv (s, ptr, maxLen, 0)) > 0)
-		{
-			//ptr + = n;		// Move pointer along the buffer
-			ptr += n;		// Move pointer along the buffer
-			//maxLen - = n;	// Adjust the maximum number of bytes
-			maxLen -= n;	// Adjust the maximum number of bytes
-			len += n;		// Update the length of string received
-			printf("while1 \n");
-		} // End of while loop
-		*/
 
-		// Print and verify the echoed string
-		//buffer [len] = Â’\0Â’;
 		buffer [n] = '\0';
-		//printf ("Echoed string received: \n");
+
 		printf ("Echoed string received: %s \n", buffer);
-		//fputs (buffer, stdout);
+
 
 		printf ("\n");
 		sleep(10); // wait 10 seconds
